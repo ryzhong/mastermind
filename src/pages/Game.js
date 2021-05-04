@@ -1,8 +1,9 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
+// import {
+//   Link
+// } from "react-router-dom";
 import './Game.css'
+import pin from '../api/pin.js'
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,13 +14,42 @@ class Game extends React.Component {
       attemptsRemaining: 10,
       prevGuesses: [],
     };
+
+    this.handlePINSubmit = this.handlePINSubmit.bind(this);
+    this.isPINValid = this.isPINValid.bind(this);
   }
 
-  handleChange(e) {
+  handlePINChange(e) {
     let input = e.target.value;
     input = input.replace(/[^\d]+/g, '');
     console.log(input)
     this.setState({guess: input})
+  }
+
+  handlePINSubmit() {
+    if(this.state.attemptsRemaining < 1) {
+      this.setState({guess: ''})
+      return;
+    }
+    if(this.isPINValid()) {
+      this.setState({attemptsRemaining: this.state.attemptsRemaining - 1})
+      this.setState({guess: ''})
+      console.log('submitted')
+      if(this.isPINCorrect()) {
+        console.log('correct')
+      } else {
+        console.log('wrong')
+      }
+      
+    }
+  }
+
+  isPINValid() {
+    return this.state.guess.length === this.state.pinLength;
+  }
+
+  isPINCorrect() {
+    return pin.getPIN() === this.state.guess;
   }
 
   render() {
@@ -35,9 +65,9 @@ class Game extends React.Component {
               <input type='text' 
                 maxLength={this.state.pinLength} 
                 value={this.state.guess} 
-                onChange={e => this.handleChange(e)}>
+                onChange={e => this.handlePINChange(e)}>
                 </input>
-              <button>Submit</button>
+              <button onClick={this.handlePINSubmit}>Submit</button>
             </div>
             <div className='container-log'>
               <div className='log'>
