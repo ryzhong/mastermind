@@ -44,10 +44,11 @@ class Game extends React.Component {
       if(this.isPINCorrect()) {
         console.log('correct')
       } else {
-        console.log('wrong')
         let guessResult = this.hasCorrectNumDigit();
         if(guessResult) {
           console.log(guessResult)
+        } else {
+          console.log('wrong')
         }
       }
       
