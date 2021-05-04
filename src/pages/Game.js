@@ -8,11 +8,20 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pinLength: 4,
       guess: '',
       attemptsRemaining: 10,
       prevGuesses: [],
     };
   }
+
+  handleChange(e) {
+    let input = e.target.value;
+    input = input.replace(/[^\d]+/g, '');
+    console.log(input)
+    this.setState({guess: input})
+  }
+
   render() {
     return (
         <div className="game">
@@ -23,7 +32,11 @@ class Game extends React.Component {
             </div>
             <div>
               <p>Please enter your PIN</p>
-              <input></input>
+              <input type='text' 
+                maxLength={this.state.pinLength} 
+                value={this.state.guess} 
+                onChange={e => this.handleChange(e)}>
+                </input>
               <button>Submit</button>
             </div>
             <div className='container-log'>
