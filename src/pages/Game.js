@@ -19,6 +19,10 @@ class Game extends React.Component {
     this.isPINValid = this.isPINValid.bind(this);
   }
 
+  componentDidMount() {
+    pin.setRandomPIN(4, 0, 7);
+  }
+
   handlePINChange(e) {
     let input = e.target.value;
     input = input.replace(/[^\d]+/g, '');
@@ -39,6 +43,10 @@ class Game extends React.Component {
         console.log('correct')
       } else {
         console.log('wrong')
+        let guessResult = this.hasValidDigit();
+        if(guessResult) {
+          console.log(guessResult)
+        }
       }
       
     }
@@ -50,6 +58,18 @@ class Game extends React.Component {
 
   isPINCorrect() {
     return pin.getPIN() === this.state.guess;
+  }
+
+  hasValidDigit() {
+    let arrPIN = pin.getPIN().split('');
+    let arrGuess = this.state.guess.split('');
+    for(let i = 0; i < this.state.pinLength; i++) {
+      if(arrPIN[i] === arrGuess[i]) return 'placement';
+    }
+    for(let i = 0; i < this.state.pinLength; i++) {
+      if(arrPIN.includes(arrGuess[i])) return 'digit';
+    }
+    return false;
   }
 
   render() {

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Link
 } from "react-router-dom";
-import pin from '../api/pin.js'
 import './Home.css'
 
 class Home extends React.Component {
@@ -19,7 +18,7 @@ class Home extends React.Component {
             <h1>Mastermind Game</h1>
             <h3>You have 7,002 Bitcoins on the line.</h3>
             <div>
-              <button onClick={() => pin.setRandomPIN(4, 0, 7)}><Link to="/game">Start Game</Link></button>
+              <button><Link to="/game">Start Game</Link></button>
             </div>
           </div>
         </div>
