@@ -19,7 +19,7 @@ class Home extends React.Component {
             <h1>Mastermind Game</h1>
             <h3>You have 7,002 Bitcoins on the line.</h3>
             <div>
-              <button><Link to="/game">Start Game</Link></button>
+              <button onClick={() => pin.setRandomPIN(4, 0, 7)}><Link to="/game">Start Game</Link></button>
             </div>
           </div>
         </div>
