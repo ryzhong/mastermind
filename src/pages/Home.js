@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Link
 } from "react-router-dom";
+import pin from '../api/pin.js'
 import './Home.css'
 
 class Home extends React.Component {
