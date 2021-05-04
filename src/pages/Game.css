@@ -1,0 +1,28 @@
+.game {
+text-align: center;
+}
+
+.game-body {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+.container-log {
+  margin-top: 30px;
+  background-color: white;
+  width: 50vw;
+  height: 40vh;
+  overflow: auto;
+}
+
+.log {
+  margin-left: 5px;
+  text-align: left;
+  color: black;
+  font-size: .8em;
+}
