@@ -17,6 +17,8 @@ class Game extends React.Component {
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
     this.isPINValid = this.isPINValid.bind(this);
+    this.isPINCorrect = this.isPINCorrect.bind(this);
+    this.hasValidDigit = this.hasValidDigit.bind(this);
   }
 
   componentDidMount() {
@@ -61,15 +63,31 @@ class Game extends React.Component {
   }
 
   hasValidDigit() {
+    let guessResults = {
+      placement: 0,
+      digits: 0,
+    }
     let arrPIN = pin.getPIN().split('');
     let arrGuess = this.state.guess.split('');
     for(let i = 0; i < this.state.pinLength; i++) {
-      if(arrPIN[i] === arrGuess[i]) return 'placement';
+      if(arrPIN[i] === arrGuess[i]) {
+        guessResults.placement++;
+        arrPIN[i] = null;
+        arrGuess[i] = 'found'
+        console.log(arrPIN, arrGuess)
+      }
     }
     for(let i = 0; i < this.state.pinLength; i++) {
-      if(arrPIN.includes(arrGuess[i])) return 'digit';
+      for(let j = 0; j < this.state.pinLength; j++) {
+        if(arrGuess[i] === arrPIN[j]) {
+          guessResults.digits++;
+          arrPIN[j] = null;
+          console.log(arrPIN, j)
+          break;
+        }
+      }
     }
-    return false;
+    return guessResults;
   }
 
   render() {
