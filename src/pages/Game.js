@@ -4,6 +4,7 @@ import React from 'react';
 // } from "react-router-dom";
 import './Game.css'
 import pin from '../api/pin.js'
+import Logs from '../components/logs.js'
 
 class Game extends React.Component {
   constructor(props) {
@@ -21,10 +22,12 @@ class Game extends React.Component {
     this.hasCorrectNumDigit = this.hasCorrectNumDigit.bind(this);
   }
 
+  //Sets random pin when game page mounts
   componentDidMount() {
     pin.setRandomPIN(4, 0, 7);
   }
 
+  //updates state and only accepts numbers as input
   handlePINChange(e) {
     let input = e.target.value;
     input = input.replace(/[^\d]+/g, '');
@@ -32,6 +35,7 @@ class Game extends React.Component {
     this.setState({ guess: input })
   }
 
+  //Makes sure PIN is valid, and logs results
   handlePINSubmit() {
     if (this.state.attemptsRemaining < 1) {
       this.setState({ guess: '' })
@@ -83,10 +87,10 @@ class Game extends React.Component {
     return 'wrong';
   }
 
+  //adds result to log
   addToLog(result) {
     let currentGuess = {};
     let feedback = `${this.state.guess}: `
-    //USE SWITCH CASE
     switch (result) {
       case 'placement':
         feedback += 'You have guessed a correct number and its location.';
@@ -94,12 +98,15 @@ class Game extends React.Component {
       case 'number':
         feedback += 'You have guessed a correct number.';
         break;
+      case 'correct':
+        feedback += 'You have guessed the PIN correctly!';
+        break;
       default:
         feedback += 'You have guessed the wrong PIN.'
     }
     currentGuess.guess = this.state.guess;
     currentGuess.feedback = feedback;
-    this.setState({ prevGuesses: [feedback, ...this.state.prevGuesses] })
+    this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
   }
 
   render() {
@@ -108,7 +115,7 @@ class Game extends React.Component {
         <div className="game-body">
           <h1>Mastermind Game</h1>
           <div>
-            Attempts left: {this.state.attemptsRemaining}
+            Attempts Remaining: {this.state.attemptsRemaining}
           </div>
           <div>
             <p>Please enter your PIN</p>
@@ -122,6 +129,7 @@ class Game extends React.Component {
           <div className='container-log'>
             <div className='log'>
               <div>Logs:</div>
+              <Logs guesses={this.state.prevGuesses} />
             </div>
           </div>
           <div>
