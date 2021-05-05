@@ -5,6 +5,7 @@ import React from 'react';
 import './Game.css'
 import pin from '../api/pin.js'
 import Logs from '../components/logs.js'
+import Modal from '../components/modal.js'
 
 class Game extends React.Component {
   constructor(props) {
@@ -14,6 +15,8 @@ class Game extends React.Component {
       guess: '',
       attemptsRemaining: 10,
       prevGuesses: [],
+      showModal: false,
+      result: ''
     };
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
@@ -110,6 +113,10 @@ class Game extends React.Component {
     this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
   }
 
+  toggleModal() {
+    this.setState({showModal: !this.state.showModal})
+  }
+
   win() {
     alert('YOU WIN')
     this.resetGame();
@@ -133,6 +140,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className="game">
+        <Modal show={this.state.showModal} result={this.state.result}/>
         <div className="game-body">
           <h1>Mastermind Game</h1>
           <div>
