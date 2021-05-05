@@ -1,10 +1,11 @@
 import React from 'react';
-// import {
-//   Link
-// } from "react-router-dom";
+import {
+  Link
+} from "react-router-dom";
 import './Game.css'
 import pin from '../api/pin.js'
 import Logs from '../components/logs.js'
+import Modal from '../components/modal.js'
 
 class Game extends React.Component {
   constructor(props) {
@@ -14,12 +15,15 @@ class Game extends React.Component {
       guess: '',
       attemptsRemaining: 10,
       prevGuesses: [],
+      showModal: false,
+      result: ''
     };
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
     this.isPINValid = this.isPINValid.bind(this);
     this.isPINCorrect = this.isPINCorrect.bind(this);
     this.hasCorrectNumDigit = this.hasCorrectNumDigit.bind(this);
+    this.playAgain = this.playAgain.bind(this);
   }
 
   //Sets random pin when game page mounts
@@ -42,7 +46,6 @@ class Game extends React.Component {
       return;
     }
     if (this.isPINValid()) {
-      this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 })
       this.setState({ guess: '' })
       console.log('submitted')
       if (this.isPINCorrect()) {
@@ -57,7 +60,9 @@ class Game extends React.Component {
           console.log('wrong')
         }
       }
-
+      this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
+        if(this.state.attemptsRemaining === 0) this.lose();
+      })
     }
   }
 
@@ -109,9 +114,38 @@ class Game extends React.Component {
     this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
   }
 
+  toggleModal() {
+    this.setState({showModal: !this.state.showModal})
+  }
+
+  win() {
+    this.setState({showModal: true, result: 'win'})
+    this.resetGame();
+  }
+
+  lose() {
+    this.setState({showModal: true, result: 'lose'})
+    this.resetGame();
+  }
+
+  resetGame() {
+    this.setState({
+      pinLength: 4,
+      guess: '',
+      attemptsRemaining: 10,
+      prevGuesses: [],
+    })
+    pin.setRandomPIN(4, 0, 7);
+  }
+
+  playAgain() {
+    this.toggleModal();
+  }
+
   render() {
     return (
       <div className="game">
+        <Modal show={this.state.showModal} result={this.state.result} play={this.playAgain}/>
         <div className="game-body">
           <h1>Mastermind Game</h1>
           <div>
@@ -133,7 +167,7 @@ class Game extends React.Component {
             </div>
           </div>
           <div>
-            <button>Give up</button>
+            <button><Link to="/" style={{textDecoration: 'none', color: 'black'}}>Give Up</Link></button>
             <button>Call Mom (Hint)</button>
           </div>
         </div>

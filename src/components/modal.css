@@ -1,0 +1,21 @@
+.modal {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(128, 128, 128, .5);
+}
+
+.modal-window {
+    position: fixed;
+    background-color: white;
+    top: 30vh;
+    left: 50vw;
+    width: 500px;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+}
+
+.outcome {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
