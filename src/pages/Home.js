@@ -18,9 +18,8 @@ class Home extends React.Component {
             <h1>Mastermind Game</h1>
             <h3>You have 7,002 Bitcoins on the line.</h3>
             <img src='https://media.giphy.com/media/LukAHGCMfxMbK/source.gif' alt='bitcoin'></img>
-            {/* <img src='https://media.giphy.com/media/7RkzQLwEFyhvbZeoIE/giphy.gif' alt='win'></img> */}
             <div>
-              <button><Link to="/game" style={{textDecoration: 'none', color: 'black'}}>Start Game</Link></button>
+              <Link to="/game" style={{textDecoration: 'none', color: 'black'}}><button>Start Game</button></Link>
             </div>
           </div>
         </div>
