@@ -23,6 +23,7 @@ class Game extends React.Component {
     this.isPINValid = this.isPINValid.bind(this);
     this.isPINCorrect = this.isPINCorrect.bind(this);
     this.hasCorrectNumDigit = this.hasCorrectNumDigit.bind(this);
+    this.playAgain = this.playAgain.bind(this);
   }
 
   //Sets random pin when game page mounts
@@ -118,12 +119,12 @@ class Game extends React.Component {
   }
 
   win() {
-    alert('YOU WIN')
+    this.setState({showModal: true, result: 'win'})
     this.resetGame();
   }
 
   lose() {
-    alert('YOU LOSE!')
+    this.setState({showModal: true, result: 'lose'})
     this.resetGame();
   }
 
@@ -137,10 +138,14 @@ class Game extends React.Component {
     pin.setRandomPIN(4, 0, 7);
   }
 
+  playAgain() {
+    this.toggleModal();
+  }
+
   render() {
     return (
       <div className="game">
-        <Modal show={this.state.showModal} result={this.state.result}/>
+        <Modal show={this.state.showModal} result={this.state.result} play={this.playAgain}/>
         <div className="game-body">
           <h1>Mastermind Game</h1>
           <div>
