@@ -42,7 +42,6 @@ class Game extends React.Component {
       return;
     }
     if (this.isPINValid()) {
-      this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 })
       this.setState({ guess: '' })
       console.log('submitted')
       if (this.isPINCorrect()) {
@@ -57,7 +56,9 @@ class Game extends React.Component {
           console.log('wrong')
         }
       }
-
+      this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
+        if(this.state.attemptsRemaining === 0) this.lose();
+      })
     }
   }
 
@@ -107,6 +108,26 @@ class Game extends React.Component {
     currentGuess.guess = this.state.guess;
     currentGuess.feedback = feedback;
     this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
+  }
+
+  win() {
+    alert('YOU WIN')
+    this.resetGame();
+  }
+
+  lose() {
+    alert('YOU LOSE!')
+    this.resetGame();
+  }
+
+  resetGame() {
+    this.setState({
+      pinLength: 4,
+      guess: '',
+      attemptsRemaining: 10,
+      prevGuesses: [],
+    })
+    pin.setRandomPIN(4, 0, 7);
   }
 
   render() {
