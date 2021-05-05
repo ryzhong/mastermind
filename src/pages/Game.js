@@ -1,7 +1,7 @@
 import React from 'react';
-// import {
-//   Link
-// } from "react-router-dom";
+import {
+  Link
+} from "react-router-dom";
 import './Game.css'
 import pin from '../api/pin.js'
 import Logs from '../components/logs.js'
@@ -167,7 +167,7 @@ class Game extends React.Component {
             </div>
           </div>
           <div>
-            <button>Give up</button>
+            <button><Link to="/" style={{textDecoration: 'none', color: 'black'}}>Give Up</Link></button>
             <button>Call Mom (Hint)</button>
           </div>
         </div>

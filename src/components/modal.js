@@ -16,8 +16,8 @@ const Modal = props => {
                 <img className='modal-img' src={pic} alt='result' width='300px'></img>
                 <div className='outcome'>{outcome}</div>
                 <div>
-                    <button onClick={props.play}><Link to="/game">Play Again</Link></button>
-                    <button><Link to="/">Go Home</Link></button>
+                    <button onClick={props.play}><Link to="/game" style={{textDecoration: 'none', color: 'black'}}>Play Again</Link></button>
+                    <button><Link to="/" style={{textDecoration: 'none', color: 'black'}}>Go Home</Link></button>
                 </div>
             </div>
         </div>
