@@ -14,9 +14,11 @@ class Game extends React.Component {
       pinLength: 4,
       guess: '',
       attemptsRemaining: 10,
-      prevGuesses: [],
+      userLogs: [],
       showModal: false,
-      result: ''
+      result: '',
+      hintsRemaining: 4,
+      hintsGiven: [],
     };
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
@@ -24,6 +26,8 @@ class Game extends React.Component {
     this.isPINCorrect = this.isPINCorrect.bind(this);
     this.hasCorrectNumDigit = this.hasCorrectNumDigit.bind(this);
     this.playAgain = this.playAgain.bind(this);
+    this.giveHint = this.giveHint.bind(this);
+    this.getHint = this.getHint.bind(this);
   }
 
   //Sets random pin when game page mounts
@@ -35,7 +39,6 @@ class Game extends React.Component {
   handlePINChange(e) {
     let input = e.target.value;
     input = input.replace(/[^\d]+/g, '');
-    console.log(input)
     this.setState({ guess: input })
   }
 
@@ -47,18 +50,15 @@ class Game extends React.Component {
     }
     if (this.isPINValid()) {
       this.setState({ guess: '' })
-      console.log('submitted')
       if (this.isPINCorrect()) {
         this.addToLog('correct')
-        console.log('correct')
+        this.win();
       } else {
         let guessResult = this.hasCorrectNumDigit();
         if (guessResult) {
           this.addToLog(guessResult)
           console.log(guessResult)
-        } else {
-          console.log('wrong')
-        }
+        } 
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
         if(this.state.attemptsRemaining === 0) this.lose();
@@ -106,12 +106,21 @@ class Game extends React.Component {
       case 'correct':
         feedback += 'You have guessed the PIN correctly!';
         break;
+      case 'hint':
+        feedback = `Mom says she remembers your PIN containing: ${this.state.hintsGiven.join(', ')}.`;
+        break;
+      case 'No more hints.':
+        feedback = 'You called mom, but mom does not have more information.'
+        break;
+      case 'wait':
+        feedback = 'Please wait a little bit and call again. Mom is currently busy.'
+        break;
       default:
         feedback += 'You have guessed the wrong PIN.'
     }
     currentGuess.guess = this.state.guess;
     currentGuess.feedback = feedback;
-    this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
+    this.setState({ userLogs: [currentGuess, ...this.state.userLogs] })
   }
 
   toggleModal() {
@@ -120,12 +129,12 @@ class Game extends React.Component {
 
   win() {
     this.setState({showModal: true, result: 'win'})
-    this.resetGame();
+    // this.resetGame();
   }
 
   lose() {
     this.setState({showModal: true, result: 'lose'})
-    this.resetGame();
+    // this.resetGame();
   }
 
   resetGame() {
@@ -133,13 +142,43 @@ class Game extends React.Component {
       pinLength: 4,
       guess: '',
       attemptsRemaining: 10,
-      prevGuesses: [],
+      userLogs: [],
+      showModal: false,
+      result: '',
+      hintsRemaining: 4,
+      hintsGiven: [],
     })
     pin.setRandomPIN(4, 0, 7);
   }
 
   playAgain() {
     this.toggleModal();
+    this.resetGame();
+  }
+
+  getHint() {
+    let userPIN = pin.getPIN().split('');
+    this.state.hintsGiven.forEach( number => {
+      userPIN.splice(userPIN.indexOf(number), 1)
+    })
+    console.log(userPIN)
+    let hintIndex = Math.floor(Math.random() * (this.state.pinLength - this.state.hintsGiven.length))
+    console.log(hintIndex)
+    this.setState({hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]]})
+    return userPIN[hintIndex];
+  }
+
+  async giveHint() {
+    if(pin.getPIN().length === 0) {
+      this.addToLog('wait')
+    }
+    if(this.state.hintsRemaining > 0) {
+      let hint = await this.getHint();
+      this.addToLog('hint', hint)
+      this.setState({hintsRemaining: this.state.hintsRemaining - 1})
+    } else {
+      this.addToLog('No more hints.')
+    }
   }
 
   render() {
@@ -163,12 +202,12 @@ class Game extends React.Component {
           <div className='container-log'>
             <div className='log'>
               <div>Logs:</div>
-              <Logs guesses={this.state.prevGuesses} />
+              <Logs guesses={this.state.userLogs} />
             </div>
           </div>
           <div>
-            <button><Link to="/" style={{textDecoration: 'none', color: 'black'}}>Give Up</Link></button>
-            <button>Call Mom (Hint)</button>
+            <Link to="/" style={{textDecoration: 'none', color: 'black'}}><button>Give Up</button></Link>
+            <button onClick={this.giveHint}>Call Mom (Hints Remaining: {this.state.hintsRemaining})</button>
           </div>
         </div>
       </div>

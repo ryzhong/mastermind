@@ -6,7 +6,7 @@ import './modal.css'
 
 const Modal = props => {
     let pic = props.result === 'win' ? 'https://media.giphy.com/media/7RkzQLwEFyhvbZeoIE/giphy.gif' : 'https://media.giphy.com/media/xYEYXCt93QZTP5adXQ/giphy.gif';
-    let outcome = props.result === 'win' ? 'You Win!' : 'You Lose!'
+    let outcome = props.result === 'win' ? 'You Win! You were able to get your Bitcoin back!' : 'You Lose! Your Bitcoin is now lost forever. :('
     if(!props.show) {
         return null;
     }
@@ -16,8 +16,8 @@ const Modal = props => {
                 <img className='modal-img' src={pic} alt='result' width='300px'></img>
                 <div className='outcome'>{outcome}</div>
                 <div>
-                    <button onClick={props.play}><Link to="/game" style={{textDecoration: 'none', color: 'black'}}>Play Again</Link></button>
-                    <button><Link to="/" style={{textDecoration: 'none', color: 'black'}}>Go Home</Link></button>
+                    <Link to="/game" style={{textDecoration: 'none', color: 'black'}}><button onClick={props.play}>Play Again</button></Link>
+                    <Link to="/" style={{textDecoration: 'none', color: 'black'}}><button>Go Home</button></Link>
                 </div>
             </div>
         </div>

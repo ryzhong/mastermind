@@ -1,4 +1,5 @@
 import React from 'react';
+import './logs.css'
 
 const logs = props => {
     if(!props) {
@@ -6,7 +7,7 @@ const logs = props => {
     }
     return (
         props.guesses.map((feedbacks, i) => {
-            return <div key={i}>{feedbacks.feedback}</div>
+            return <div className='log-entry' key={i}>{feedbacks.feedback}</div>
         })
     )
 }
