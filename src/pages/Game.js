@@ -14,10 +14,10 @@ class Game extends React.Component {
       pinLength: 4,
       guess: '',
       attemptsRemaining: 10,
-      prevGuesses: [],
+      userLogs: [],
       showModal: false,
       result: '',
-      hintsRemaining: 2,
+      hintsRemaining: 4,
       hintsGiven: [],
     };
 
@@ -52,6 +52,7 @@ class Game extends React.Component {
       this.setState({ guess: '' })
       if (this.isPINCorrect()) {
         this.addToLog('correct')
+        this.win();
       } else {
         let guessResult = this.hasCorrectNumDigit();
         if (guessResult) {
@@ -92,7 +93,7 @@ class Game extends React.Component {
   }
 
   //adds result to log
-  addToLog(result, hint) {
+  addToLog(result) {
     let currentGuess = {};
     let feedback = `${this.state.guess}: `
     switch (result) {
@@ -119,7 +120,7 @@ class Game extends React.Component {
     }
     currentGuess.guess = this.state.guess;
     currentGuess.feedback = feedback;
-    this.setState({ prevGuesses: [currentGuess, ...this.state.prevGuesses] })
+    this.setState({ userLogs: [currentGuess, ...this.state.userLogs] })
   }
 
   toggleModal() {
@@ -128,12 +129,12 @@ class Game extends React.Component {
 
   win() {
     this.setState({showModal: true, result: 'win'})
-    this.resetGame();
+    // this.resetGame();
   }
 
   lose() {
     this.setState({showModal: true, result: 'lose'})
-    this.resetGame();
+    // this.resetGame();
   }
 
   resetGame() {
@@ -141,10 +142,10 @@ class Game extends React.Component {
       pinLength: 4,
       guess: '',
       attemptsRemaining: 10,
-      prevGuesses: [],
+      userLogs: [],
       showModal: false,
       result: '',
-      hintsRemaining: 2,
+      hintsRemaining: 4,
       hintsGiven: [],
     })
     pin.setRandomPIN(4, 0, 7);
@@ -152,6 +153,7 @@ class Game extends React.Component {
 
   playAgain() {
     this.toggleModal();
+    this.resetGame();
   }
 
   getHint() {
@@ -200,7 +202,7 @@ class Game extends React.Component {
           <div className='container-log'>
             <div className='log'>
               <div>Logs:</div>
-              <Logs guesses={this.state.prevGuesses} />
+              <Logs guesses={this.state.userLogs} />
             </div>
           </div>
           <div>
