@@ -55,13 +55,13 @@ class Game extends React.Component {
         if (guessResult) {
           this.addToLog(guessResult)
           console.log(guessResult)
-        } 
+        }
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
-        if(this.state.attemptsRemaining === 0) this.lose();
+        if (this.state.attemptsRemaining === 0) this.lose();
       })
+      this.setState({ guess: '' })
     }
-    this.setState({guess: ''})
   }
 
   isPINValid() {
@@ -100,15 +100,15 @@ class Game extends React.Component {
   }
 
   toggleModal() {
-    this.setState({showModal: !this.state.showModal})
+    this.setState({ showModal: !this.state.showModal })
   }
 
   win() {
-    this.setState({showModal: true, result: 'win'})
+    this.setState({ showModal: true, result: 'win' })
   }
 
   lose() {
-    this.setState({showModal: true, result: 'lose'})
+    this.setState({ showModal: true, result: 'lose' })
   }
 
   resetGame() {
@@ -134,24 +134,24 @@ class Game extends React.Component {
   //move setting state to give hint
   getHint() {
     let userPIN = pin.getPIN().split('');
-    this.state.hintsGiven.forEach( number => {
+    this.state.hintsGiven.forEach(number => {
       userPIN.splice(userPIN.indexOf(number), 1)
     })
     console.log(userPIN)
     let hintIndex = Math.floor(Math.random() * (this.state.pinLength - this.state.hintsGiven.length))
     console.log(hintIndex)
-    this.setState({hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]]}) //move this to giveHint
+    this.setState({ hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]] }) //move this to giveHint
     return userPIN[hintIndex];
   }
 
   async giveHint() {
-    if(pin.getPIN().length === 0) {
+    if (pin.getPIN().length === 0) {
       this.addToLog('wait')
     }
-    if(this.state.hintsRemaining > 0) {
+    if (this.state.hintsRemaining > 0) {
       let hint = await this.getHint();
       this.addToLog('hint', hint)
-      this.setState({hintsRemaining: this.state.hintsRemaining - 1})
+      this.setState({ hintsRemaining: this.state.hintsRemaining - 1 })
     } else {
       this.addToLog('No more hints.')
     }
@@ -160,7 +160,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className="game">
-        <Modal show={this.state.showModal} result={this.state.result} play={this.playAgain}/>
+        <Modal show={this.state.showModal} result={this.state.result} play={this.playAgain} />
         <div className="game-body">
           <h1>Mastermind Game</h1>
           <div>
@@ -175,14 +175,11 @@ class Game extends React.Component {
             </input>
             <button onClick={this.handlePINSubmit}>Submit</button>
           </div>
-          <div className='container-log'>
-            <div className='log'>
-              <div>Logs:</div>
-              <Logs guesses={this.state.userLogs} />
-            </div>
+          <div>
+            <Logs guesses={this.state.userLogs} />
           </div>
           <div>
-            <Link to="/" style={{textDecoration: 'none', color: 'black'}}><button>Give Up</button></Link>
+            <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><button>Give Up</button></Link>
             <button onClick={this.giveHint}>Call Mom (Hints Remaining: {this.state.hintsRemaining})</button>
           </div>
         </div>

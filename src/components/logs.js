@@ -1,14 +1,18 @@
 import React from 'react';
 import './logs.css'
+import LogsEntry from './logsEntry.js'
 
 const logs = props => {
-    if(!props) {
+    if (!props) {
         return <div></div>
     }
     return (
-        props.guesses.map((feedbacks, i) => {
-            return <div className='log-entry' key={i}>{feedbacks.feedback}</div>
-        })
+        <div className='container-log'>
+            <div className='log'>
+                <div>Logs:</div>
+                <LogsEntry guesses={props.guesses} />
+            </div>
+        </div>
     )
 }
 
