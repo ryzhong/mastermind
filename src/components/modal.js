@@ -6,7 +6,7 @@ import './modal.css'
 
 const Modal = props => {
     let pic = props.result === 'win' ? 'https://media.giphy.com/media/7RkzQLwEFyhvbZeoIE/giphy.gif' : 'https://media.giphy.com/media/xYEYXCt93QZTP5adXQ/giphy.gif';
-    let outcome = props.result === 'win' ? 'You Win! You were able to get your bitcoin back!' : 'You Lose! Your bitcoin is now lost forever. :('
+    let outcome = props.result === 'win' ? 'You Win! You were able to get your Bitcoin back!' : 'You Lose! Your Bitcoin is now lost forever. :('
     if(!props.show) {
         return null;
     }
