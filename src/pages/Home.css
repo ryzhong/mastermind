@@ -12,6 +12,11 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.home-description {
+  width: 60vw;
+  font-size: .6em;
+}
+
+.hide-description{
+  visibility: hidden;
 }
