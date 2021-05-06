@@ -23,8 +23,6 @@ class Game extends React.Component {
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
     this.isPINValid = this.isPINValid.bind(this);
-    this.isPINCorrect = this.isPINCorrect.bind(this);
-    this.hasCorrectNumDigit = this.hasCorrectNumDigit.bind(this);
     this.playAgain = this.playAgain.bind(this);
     this.giveHint = this.giveHint.bind(this);
     this.getHint = this.getHint.bind(this);
@@ -49,12 +47,11 @@ class Game extends React.Component {
       return;
     }
     if (this.isPINValid()) {
-      this.setState({ guess: '' })
-      if (this.isPINCorrect()) {
+      if (pin.isPINCorrect(this.state.guess)) {
         this.addToLog('correct')
         this.win();
       } else {
-        let guessResult = this.hasCorrectNumDigit();
+        let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
           this.addToLog(guessResult)
           console.log(guessResult)
@@ -64,32 +61,11 @@ class Game extends React.Component {
         if(this.state.attemptsRemaining === 0) this.lose();
       })
     }
+    this.setState({guess: ''})
   }
 
   isPINValid() {
     return this.state.guess.length === this.state.pinLength;
-  }
-
-  isPINCorrect() {
-    return pin.getPIN() === this.state.guess;
-  }
-
-  hasCorrectNumDigit() {
-    let arrPIN = pin.getPIN().split('');
-    let arrGuess = this.state.guess.split('');
-    for (let i = 0; i < this.state.pinLength; i++) {
-      if (arrPIN[i] === arrGuess[i]) {
-        return 'placement'
-      }
-    }
-    for (let i = 0; i < this.state.pinLength; i++) {
-      for (let j = 0; j < this.state.pinLength; j++) {
-        if (arrGuess[i] === arrPIN[j]) {
-          return 'number'
-        }
-      }
-    }
-    return 'wrong';
   }
 
   //adds result to log
@@ -129,12 +105,10 @@ class Game extends React.Component {
 
   win() {
     this.setState({showModal: true, result: 'win'})
-    // this.resetGame();
   }
 
   lose() {
     this.setState({showModal: true, result: 'lose'})
-    // this.resetGame();
   }
 
   resetGame() {
@@ -156,6 +130,8 @@ class Game extends React.Component {
     this.resetGame();
   }
 
+  //move this to pin.js
+  //move setting state to give hint
   getHint() {
     let userPIN = pin.getPIN().split('');
     this.state.hintsGiven.forEach( number => {
@@ -164,7 +140,7 @@ class Game extends React.Component {
     console.log(userPIN)
     let hintIndex = Math.floor(Math.random() * (this.state.pinLength - this.state.hintsGiven.length))
     console.log(hintIndex)
-    this.setState({hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]]})
+    this.setState({hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]]}) //move this to giveHint
     return userPIN[hintIndex];
   }
 
