@@ -40,7 +40,7 @@ let hasCorrectNumDigit = (guess, pinLength) => {
                 guessResult.number++;
                 arrPIN[j] = null;
                 console.log(arrPIN, j)
-                // break;
+                break;
             }
         }
     }
