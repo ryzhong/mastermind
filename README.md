@@ -58,3 +58,7 @@ I didn't want to make it too easy either, so the hint will give a random correct
 ## Journal
 
 My [journal](https://docs.google.com/document/d/1e5KZlyN8xC27sb8LR8mzX5C5YhOGUlmrdKekhHh4SyM/edit?usp=sharing) that includes my thought process throughout the coding challenge.
+
+### Sounds
+
+Sounds from ZapSplat
