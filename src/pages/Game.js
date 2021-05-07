@@ -80,8 +80,8 @@ class Game extends React.Component {
     let feedback;
     switch (result) {
       case 'guess':
-        feedback = `${this.state.guessResult.guess}: {Correct Placement: ${this.state.guessResult.placement}  
-          Correct Number Only: ${this.state.guessResult.number}}`;
+        feedback = `${this.state.guessResult.guess}: Correct: {Number & Placement: ${this.state.guessResult.placement}  
+          Number Only: ${this.state.guessResult.number}}`;
         break;
       case 'hint':
         feedback = `Mom says she remembers your PIN containing: ${this.state.hintsGiven.join(', ')}.`;
