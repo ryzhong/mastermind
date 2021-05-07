@@ -19,7 +19,7 @@ class Home extends React.Component {
       <p className='home-description'>
         You have a storage device that would allow you to get access to your 7,002 Bitcoins,
         however you threw away the piece of paper you wrote down your PIN on.
-        You storage device gives users limited number of guesses before it seizes up and encrypts its contents forever.
+        Your storage device gives users limited number of guesses before it seizes up and encrypts its contents forever.
       </p>
         <p className='home-description'>
           You need to guess the correct PIN within the allotted attempts or you will lose all your Bitcoin.
