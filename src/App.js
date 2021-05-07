@@ -9,11 +9,7 @@ import Home from './pages/Home.js'
 import Game from './pages/Game.js'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+
   render() {
     return (
       <Router>
