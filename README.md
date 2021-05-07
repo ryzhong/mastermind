@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Mastermind
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+You have a storage device that would allow you to get access to the 7,002 Bitcoins, however you threw away the piece of paper you wrote down your PIN on.  
+Your storage device gives users limited number of guesses before it seizes up and encrypts its contents forever.
 
-In the project directory, you can run:
+You need to guess the correct PIN within the allotted attempts or you will lose all your Bitcoin.  
+Luckily, your storage device has a special feature that will tell you if you guessed any of the numbers
+correctly. It tells you if you guessed any digits correctly, but does not tell you which digit you 
+guessed correctly.
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+git clone https://github.com/ryzhong/mastermind.git
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+cd mastermind
 
-### `npm test`
+npm install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+npm start
 
-### `npm run build`
+-> Opens [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How it works
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. The user will click on the start game button to begin.
+2. The user can enter a guess to what the PIN is.
+3. There will be a feedback based on the user's guess.
+4. The user can enter new guesses until they run out of tries or if they guess correctly.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Extensions 
 
-### `npm run eject`
+There is a hint function that allows the user to get a random correct PIN number.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Note: I wanted to add this feature because I originally thought that the game would not give feedback about guessing more than one number or number and digit correctly.  
+To make the game easier for the user, I thought that adding a hint function would help balance the game out.  
+I didn't want to make it too easy either, so I the hint will give a random correct PIN number with no location.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Journal
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+My [journal](https://docs.google.com/document/d/1e5KZlyN8xC27sb8LR8mzX5C5YhOGUlmrdKekhHh4SyM/edit?usp=sharing) that includes my thought process throughout the coding challenge.

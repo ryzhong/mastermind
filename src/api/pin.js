@@ -54,4 +54,4 @@ let getHint = (hintsGiven, pinLength) => {
     return userPIN[hintIndex];
   }
 
-module.exports = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit, getHint };
+export default pin = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit, getHint };
