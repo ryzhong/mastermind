@@ -6,6 +6,9 @@ import './Game.css'
 import pin from '../api/pin.js'
 import Logs from '../components/logs.js'
 import Modal from '../components/modal.js'
+import win from '../assets/win.mp3'
+import lose from '../assets/lose.mp3'
+import wrong from '../assets/wrong.mp3'
 
 class Game extends React.Component {
   constructor(props) {
@@ -53,9 +56,11 @@ class Game extends React.Component {
         this.addToLog('correct')
         this.win();
       } else {
+        var audio = new Audio(wrong);
+        audio.play();
         let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
-          this.setState({guessResult}, () => this.addToLog('guess'))
+          this.setState({ guessResult }, () => this.addToLog('guess'))
         }
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
@@ -100,10 +105,14 @@ class Game extends React.Component {
   }
 
   win() {
+    var audio = new Audio(win);
+    audio.play();
     this.setState({ showModal: true, result: 'win' })
   }
 
   lose() {
+    var audio = new Audio(lose);
+    audio.play();
     this.setState({ showModal: true, result: 'lose' })
   }
 
