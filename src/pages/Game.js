@@ -54,7 +54,6 @@ class Game extends React.Component {
         let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
           this.setState({guessResult}, () => this.addToLog('guess'))
-          console.log(guessResult)
         }
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
@@ -128,7 +127,6 @@ class Game extends React.Component {
   async giveHint() {
     if (this.state.hintsRemaining > 0) {
       let hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength);
-      console.log(hint)
       if (hint === undefined) {
         this.addToLog('wait')
         return;
