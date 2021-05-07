@@ -7,7 +7,10 @@ const logsEntry = props => {
     }
     return (
         props.guesses.map((feedbacks, i) => {
-            return <div className='log-entry' key={i}>{feedbacks.feedback}</div>
+            if(i !== 0) {
+                return <div className='log-entry' key={i}>{feedbacks.feedback}</div>
+            }
+            return <div className='log-entry current' key={i}>{feedbacks.feedback}</div>
         })
     )
 }
