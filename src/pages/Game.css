@@ -1,5 +1,5 @@
 .game {
-text-align: center;
+  text-align: center;
 }
 
 .game-body {
@@ -10,4 +10,8 @@ text-align: center;
     align-items: center;
     font-size: calc(10px + 2vmin);
     color: white;
+  }
+
+.pin-description {
+  font-size: .6em;
   }
