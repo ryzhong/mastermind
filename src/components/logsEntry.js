@@ -1,5 +1,5 @@
 import React from 'react';
-import './logsEntry.css'
+import './logsEntry.css';
 
 const logsEntry = props => {
     if (!props) {
