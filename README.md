@@ -12,6 +12,22 @@ guessed correctly.
 
 ## Installation
 
+Required Technology:  
+- Git
+- node.js
+- npm
+
+If you do not have git installed: https://github.com/git-guides/install-git
+
+If you do not have node.js installed: https://nodejs.org/en/download/package-manager/
+
+If you do not have npm intalled: https://www.npmjs.com/get-npm
+
+
+Installation:
+
+```
+
 git clone https://github.com/ryzhong/mastermind.git
 
 cd mastermind
@@ -19,6 +35,8 @@ cd mastermind
 npm install
 
 npm start
+
+```
 
 -> Opens [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -35,7 +53,7 @@ There is a hint function that allows the user to get a random correct PIN number
 
 Note: I wanted to add this feature because I originally thought that the game would not give feedback about guessing more than one number or number and digit correctly.  
 To make the game easier for the user, I thought that adding a hint function would help balance the game out.  
-I didn't want to make it too easy either, so I the hint will give a random correct PIN number with no location.
+I didn't want to make it too easy either, so the hint will give a random correct PIN number with no location.
 
 ## Journal
 
