@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
 import './Game.css'
 import pin from '../api/pin.js'
 import Logs from '../components/logs.js'
@@ -46,7 +43,8 @@ class Game extends React.Component {
   }
 
   //Makes sure PIN is valid, and logs results
-  handlePINSubmit() {
+  handlePINSubmit(e) {
+    e.preventDefault()
     if (this.state.attemptsRemaining < 1) {
       this.setState({ guess: '' })
       return;
@@ -137,7 +135,7 @@ class Game extends React.Component {
 
   async giveHint() {
     if (this.state.hintsRemaining > 0) {
-      let hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength);
+      let hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength)
       if (hint === undefined) {
         this.addToLog('wait')
         return;
@@ -163,18 +161,20 @@ class Game extends React.Component {
           <div>
             <p>Please enter your PIN</p>
             <div className='pin-description'>Your PIN is {this.state.pinLength} digits long and each number is between {this.state.start} - {this.state.end}</div>
-            <input type='text'
-              maxLength={this.state.pinLength}
-              value={this.state.guess}
-              onChange={e => this.handlePINChange(e)}>
-            </input>
-            <button onClick={this.handlePINSubmit}>Submit</button>
+            <form onSubmit={e => this.handlePINSubmit(e)}>
+              <input type='text'
+                maxLength={this.state.pinLength}
+                value={this.state.guess}
+                onChange={e => this.handlePINChange(e)}>
+              </input>
+              <input type='submit' value='Submit'></input>
+            </form>
           </div>
           <div>
             <Logs guesses={this.state.userLogs} />
           </div>
           <div>
-            <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><button>Give Up</button></Link>
+            <button onClick={() => window.location.href='/'}>Give Up</button>
             <button onClick={this.giveHint}>Call Mom (Hints Remaining: {this.state.hintsRemaining})</button>
           </div>
         </div>
