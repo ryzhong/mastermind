@@ -1,17 +1,17 @@
 import React from 'react';
-import './Home.css'
+import './Home.css';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDescription: false
+      showDescription: false,
     };
   }
 
   render() {
-    let rules = this.state.showDescription ? 
-    <div className={this.state.showDescription ? 'show-description' : 'hide-description'}>
+    const rules = this.state.showDescription
+      ? <div className={this.state.showDescription ? 'show-description' : 'hide-description'}>
       <h4>Game Rules</h4>
       <p className='home-description'>
         You have a storage device that would allow you to get access to your 7,002 Bitcoins,
@@ -21,11 +21,10 @@ class Home extends React.Component {
         <p className='home-description'>
           You need to guess the correct PIN within the allotted attempts or you will lose all your Bitcoin.
           Luckily, your storage device has a special feature that will tell you if you guessed any of the numbers
-          correctly. It tells you if you guessed any digits correctly, but does not tell you which digit you 
+          correctly. It tells you if you guessed any digits correctly, but does not tell you which digit you
           guessed correctly.
       </p>
     </div> : null;
-
 
     return (
       <div className="home">
@@ -34,7 +33,7 @@ class Home extends React.Component {
           <h3>You have 7,002 Bitcoins on the line.</h3>
           <img src='https://media.giphy.com/media/LukAHGCMfxMbK/source.gif' alt='bitcoin'></img>
           <div>
-            <button onClick={() => window.location.href='/game'}>Start Game</button>
+            <button onClick={() => window.location.href = '/game'}>Start Game</button>
           </div>
           <div>
             <button onClick={() => this.setState({ showDescription: !this.state.showDescription })}>Game Rules</button>
@@ -42,7 +41,7 @@ class Home extends React.Component {
           {rules}
         </div>
       </div>
-    )
+    );
   }
 }
 

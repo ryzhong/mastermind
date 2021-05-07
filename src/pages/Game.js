@@ -1,11 +1,11 @@
 import React from 'react';
-import './Game.css'
-import pin from '../api/pin.js'
-import Logs from '../components/logs.js'
-import Modal from '../components/modal.js'
-import win from '../assets/win.mp3'
-import lose from '../assets/lose.mp3'
-import wrong from '../assets/wrong.mp3'
+import './Game.css';
+import pin from '../api/pin.js';
+import Logs from '../components/logs.js';
+import Modal from '../components/modal.js';
+import win from '../assets/win.mp3';
+import lose from '../assets/lose.mp3';
+import wrong from '../assets/wrong.mp3';
 
 class Game extends React.Component {
   constructor(props) {
@@ -30,41 +30,41 @@ class Game extends React.Component {
     this.giveHint = this.giveHint.bind(this);
   }
 
-  //Sets random pin when game page mounts
+  // Sets random pin when game page mounts
   componentDidMount() {
     pin.setRandomPIN(4, 0, 7);
   }
 
-  //updates state and only accepts numbers as input
+  // updates state and only accepts numbers as input
   handlePINChange(e) {
     let input = e.target.value;
     input = input.replace(/[^\d]+/g, '');
-    this.setState({ guess: input })
+    this.setState({ guess: input });
   }
 
-  //Makes sure PIN is valid, and logs results
+  // Makes sure PIN is valid, and logs results
   handlePINSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (this.state.attemptsRemaining < 1) {
-      this.setState({ guess: '' })
+      this.setState({ guess: '' });
       return;
     }
     if (this.isPINValid()) {
       if (pin.isPINCorrect(this.state.guess)) {
-        this.addToLog('correct')
+        this.addToLog('correct');
         this.win();
       } else {
-        var audio = new Audio(wrong);
+        const audio = new Audio(wrong);
         audio.play();
-        let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
+        const guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
-          this.setState({ guessResult }, () => this.addToLog('guess'))
+          this.setState({ guessResult }, () => this.addToLog('guess'));
         }
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
         if (this.state.attemptsRemaining === 0) this.lose();
-      })
-      this.setState({ guess: '' })
+      });
+      this.setState({ guess: '' });
     }
   }
 
@@ -72,9 +72,9 @@ class Game extends React.Component {
     return this.state.guess.length === this.state.pinLength;
   }
 
-  //adds result to log
+  // adds result to log
   addToLog(result) {
-    let currentGuess = {};
+    const currentGuess = {};
     let feedback;
     switch (result) {
       case 'guess':
@@ -85,33 +85,33 @@ class Game extends React.Component {
         feedback = `Mom says she remembers your PIN containing: ${this.state.hintsGiven.join(', ')}.`;
         break;
       case 'No more hints.':
-        feedback = 'You called mom, but mom does not have more information.'
+        feedback = 'You called mom, but mom does not have more information.';
         break;
       case 'wait':
-        feedback = 'Please wait a little bit and call again. Mom is currently busy.'
+        feedback = 'Please wait a little bit and call again. Mom is currently busy.';
         break;
       default:
-        feedback = `${this.state.guessResult.guess}: You have guessed the wrong PIN.`
+        feedback = `${this.state.guessResult.guess}: You have guessed the wrong PIN.`;
     }
     currentGuess.guess = this.state.guessResult.guess;
     currentGuess.feedback = feedback;
-    this.setState({ userLogs: [currentGuess, ...this.state.userLogs] })
+    this.setState({ userLogs: [currentGuess, ...this.state.userLogs] });
   }
 
   toggleModal() {
-    this.setState({ showModal: !this.state.showModal })
+    this.setState({ showModal: !this.state.showModal });
   }
 
   win() {
-    var audio = new Audio(win);
+    const audio = new Audio(win);
     audio.play();
-    this.setState({ showModal: true, result: 'win' })
+    this.setState({ showModal: true, result: 'win' });
   }
 
   lose() {
-    var audio = new Audio(lose);
+    const audio = new Audio(lose);
     audio.play();
-    this.setState({ showModal: true, result: 'lose' })
+    this.setState({ showModal: true, result: 'lose' });
   }
 
   resetGame() {
@@ -124,7 +124,7 @@ class Game extends React.Component {
       result: '',
       hintsRemaining: 4,
       hintsGiven: [],
-    })
+    });
     pin.setRandomPIN(4, 0, 7);
   }
 
@@ -135,17 +135,17 @@ class Game extends React.Component {
 
   async giveHint() {
     if (this.state.hintsRemaining > 0) {
-      let hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength)
+      const hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength);
       if (hint === undefined) {
-        this.addToLog('wait')
+        this.addToLog('wait');
         return;
-      } else {
-        this.setState({ hintsGiven: [...this.state.hintsGiven, hint] })
       }
-      this.addToLog('hint', hint)
-      this.setState({ hintsRemaining: this.state.hintsRemaining - 1 })
+      this.setState({ hintsGiven: [...this.state.hintsGiven, hint] });
+
+      this.addToLog('hint', hint);
+      this.setState({ hintsRemaining: this.state.hintsRemaining - 1 });
     } else {
-      this.addToLog('No more hints.')
+      this.addToLog('No more hints.');
     }
   }
 
@@ -161,11 +161,11 @@ class Game extends React.Component {
           <div>
             <p>Please enter your PIN</p>
             <div className='pin-description'>Your PIN is {this.state.pinLength} digits long and each number is between {this.state.start} - {this.state.end}</div>
-            <form onSubmit={e => this.handlePINSubmit(e)}>
+            <form onSubmit={(e) => this.handlePINSubmit(e)}>
               <input type='text'
                 maxLength={this.state.pinLength}
                 value={this.state.guess}
-                onChange={e => this.handlePINChange(e)}>
+                onChange={(e) => this.handlePINChange(e)}>
               </input>
               <input type='submit' value='Submit'></input>
             </form>
@@ -174,12 +174,12 @@ class Game extends React.Component {
             <Logs guesses={this.state.userLogs} />
           </div>
           <div>
-            <button onClick={() => window.location.href='/'}>Give Up</button>
+            <button onClick={() => window.location.href = '/'}>Give Up</button>
             <button onClick={this.giveHint}>Call Mom (Hints Remaining: {this.state.hintsRemaining})</button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

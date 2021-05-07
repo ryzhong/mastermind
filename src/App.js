@@ -2,13 +2,12 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
-} from "react-router-dom";
-import Home from './pages/Home.js'
-import Game from './pages/Game.js'
+  Route,
+} from 'react-router-dom';
+import Home from './pages/Home.js';
+import Game from './pages/Game.js';
 
 class App extends React.Component {
-
   render() {
     return (
       <Router>
