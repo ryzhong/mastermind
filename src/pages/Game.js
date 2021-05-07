@@ -53,7 +53,7 @@ class Game extends React.Component {
       } else {
         let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
-          this.addToLog(guessResult)
+          this.setState({guessResult}, () => this.addToLog('guess'))
           console.log(guessResult)
         }
       }
@@ -71,16 +71,11 @@ class Game extends React.Component {
   //adds result to log
   addToLog(result) {
     let currentGuess = {};
-    let feedback = `${this.state.guess}: `
+    let feedback = `${this.state.guessResult.guess}: `;
     switch (result) {
-      case 'placement':
-        feedback += 'You have guessed a correct number and its location.';
-        break;
-      case 'number':
-        feedback += 'You have guessed a correct number.';
-        break;
-      case 'correct':
-        feedback += 'You have guessed the PIN correctly!';
+      case 'guess':
+        feedback += `{Correct Placement: ${this.state.guessResult.placement}  
+          Correct Number Only: ${this.state.guessResult.number}}`;
         break;
       case 'hint':
         feedback = `Mom says she remembers your PIN containing: ${this.state.hintsGiven.join(', ')}.`;
@@ -94,7 +89,7 @@ class Game extends React.Component {
       default:
         feedback += 'You have guessed the wrong PIN.'
     }
-    currentGuess.guess = this.state.guess;
+    currentGuess.guess = this.state.guessResult.guess;
     currentGuess.feedback = feedback;
     this.setState({ userLogs: [currentGuess, ...this.state.userLogs] })
   }
