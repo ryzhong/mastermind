@@ -48,4 +48,15 @@ let hasCorrectNumDigit = (guess, pinLength) => {
     return guessResult;
 }
 
-module.exports = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit };
+let getHint = (hintsGiven, pinLength) => {
+    let userPIN = getPIN().split('');
+    hintsGiven.forEach(number => {
+      userPIN.splice(userPIN.indexOf(number), 1)
+    })
+    console.log(userPIN)
+    let hintIndex = Math.floor(Math.random() * (pinLength - hintsGiven.length))
+    console.log(hintIndex)
+    return userPIN[hintIndex];
+  }
+
+module.exports = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit, getHint };
