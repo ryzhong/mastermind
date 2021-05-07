@@ -5,7 +5,6 @@ let pin = '';
 let setRandomPIN = async (digits, min, max) => {
     let result = await axios.get(`https://www.random.org/integers/?num=${digits}&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`)
         .catch(err => console.log(err))
-    console.log(result.data)
     pin = result.data.split('\n').filter(digit => digit).join('');
 }
 
@@ -30,7 +29,6 @@ let hasCorrectNumDigit = (guess, pinLength) => {
             guessResult.placement++;
             arrPIN[i] = null;
             arrGuess[i] = 'found'
-            console.log(arrPIN, arrGuess)
         }
     }
 
@@ -39,7 +37,6 @@ let hasCorrectNumDigit = (guess, pinLength) => {
             if (arrGuess[i] === arrPIN[j]) {
                 guessResult.number++;
                 arrPIN[j] = null;
-                console.log(arrPIN, j)
                 break;
             }
         }
@@ -48,4 +45,13 @@ let hasCorrectNumDigit = (guess, pinLength) => {
     return guessResult;
 }
 
-module.exports = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit };
+let getHint = (hintsGiven, pinLength) => {
+    let userPIN = getPIN().split('');
+    hintsGiven.forEach(number => {
+      userPIN.splice(userPIN.indexOf(number), 1)
+    })
+    let hintIndex = Math.floor(Math.random() * (pinLength - hintsGiven.length))
+    return userPIN[hintIndex];
+  }
+
+module.exports = { setRandomPIN, getPIN, isPINCorrect, hasCorrectNumDigit, getHint };

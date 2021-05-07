@@ -19,13 +19,13 @@ class Game extends React.Component {
       result: '',
       hintsRemaining: 4,
       hintsGiven: [],
+      guessResult: {},
     };
 
     this.handlePINSubmit = this.handlePINSubmit.bind(this);
     this.isPINValid = this.isPINValid.bind(this);
     this.playAgain = this.playAgain.bind(this);
     this.giveHint = this.giveHint.bind(this);
-    this.getHint = this.getHint.bind(this);
   }
 
   //Sets random pin when game page mounts
@@ -54,7 +54,6 @@ class Game extends React.Component {
         let guessResult = pin.hasCorrectNumDigit(this.state.guess, this.state.pinLength);
         if (guessResult) {
           this.setState({guessResult}, () => this.addToLog('guess'))
-          console.log(guessResult)
         }
       }
       this.setState({ attemptsRemaining: this.state.attemptsRemaining - 1 }, () => {
@@ -71,10 +70,10 @@ class Game extends React.Component {
   //adds result to log
   addToLog(result) {
     let currentGuess = {};
-    let feedback = `${this.state.guessResult.guess}: `;
+    let feedback;
     switch (result) {
       case 'guess':
-        feedback += `{Correct Placement: ${this.state.guessResult.placement}  
+        feedback = `${this.state.guessResult.guess}: {Correct Placement: ${this.state.guessResult.placement}  
           Correct Number Only: ${this.state.guessResult.number}}`;
         break;
       case 'hint':
@@ -87,7 +86,7 @@ class Game extends React.Component {
         feedback = 'Please wait a little bit and call again. Mom is currently busy.'
         break;
       default:
-        feedback += 'You have guessed the wrong PIN.'
+        feedback = `${this.state.guessResult.guess}: You have guessed the wrong PIN.`
     }
     currentGuess.guess = this.state.guessResult.guess;
     currentGuess.feedback = feedback;
@@ -125,26 +124,15 @@ class Game extends React.Component {
     this.resetGame();
   }
 
-  //move this to pin.js
-  //move setting state to give hint
-  getHint() {
-    let userPIN = pin.getPIN().split('');
-    this.state.hintsGiven.forEach(number => {
-      userPIN.splice(userPIN.indexOf(number), 1)
-    })
-    console.log(userPIN)
-    let hintIndex = Math.floor(Math.random() * (this.state.pinLength - this.state.hintsGiven.length))
-    console.log(hintIndex)
-    this.setState({ hintsGiven: [...this.state.hintsGiven, userPIN[hintIndex]] }) //move this to giveHint
-    return userPIN[hintIndex];
-  }
-
   async giveHint() {
-    if (pin.getPIN().length === 0) {
-      this.addToLog('wait')
-    }
     if (this.state.hintsRemaining > 0) {
-      let hint = await this.getHint();
+      let hint = await pin.getHint(this.state.hintsGiven, this.state.pinLength);
+      if (hint === undefined) {
+        this.addToLog('wait')
+        return;
+      } else {
+        this.setState({ hintsGiven: [...this.state.hintsGiven, hint] })
+      }
       this.addToLog('hint', hint)
       this.setState({ hintsRemaining: this.state.hintsRemaining - 1 })
     } else {
