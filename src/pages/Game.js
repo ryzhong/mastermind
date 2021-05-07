@@ -12,6 +12,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
       pinLength: 4,
+      start: 0,
+      end: 7,
       guess: '',
       attemptsRemaining: 10,
       userLogs: [],
@@ -151,6 +153,7 @@ class Game extends React.Component {
           </div>
           <div>
             <p>Please enter your PIN</p>
+            <div className='pin-description'>Your PIN is {this.state.pinLength} digits long and each number is between {this.state.start} - {this.state.end}</div>
             <input type='text'
               maxLength={this.state.pinLength}
               value={this.state.guess}
