@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link,
+} from 'react-router-dom';
 import './modal.css';
 
 const Modal = (props) => {
@@ -13,8 +16,8 @@ const Modal = (props) => {
                 <img className='modal-img' src={pic} alt='result' width='300px'></img>
                 <div className='outcome'>{outcome}</div>
                 <div>
-                    <button onClick={props.play}>Play Again</button>
-                    <button onClick={() => window.location.href = '/'}>Go Home</button>
+                    <button className='btn' onClick={props.play}>Play Again</button>
+                    <Link className='btn' to='/'>Go Home</Link>
                 </div>
             </div>
         </div>

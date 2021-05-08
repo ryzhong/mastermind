@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link,
+} from 'react-router-dom';
 import './Home.css';
 
 class Home extends React.Component {
@@ -33,10 +36,10 @@ class Home extends React.Component {
           <h3>You have 7,002 Bitcoins on the line.</h3>
           <img src='https://media.giphy.com/media/LukAHGCMfxMbK/source.gif' alt='bitcoin'></img>
           <div>
-            <button onClick={() => window.location.href = '/game'}>Start Game</button>
+            <Link className='btn' to='/game'>Start Game</Link>
           </div>
           <div>
-            <button onClick={() => this.setState({ showDescription: !this.state.showDescription })}>Game Rules</button>
+            <button className='btn' onClick={() => this.setState({ showDescription: !this.state.showDescription })}>Game Rules</button>
           </div>
           {rules}
         </div>
