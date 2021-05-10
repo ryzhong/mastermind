@@ -130,6 +130,8 @@ class Game extends React.Component {
   resetGame() {
     this.setState({
       pinLength: 4,
+      start: 0,
+      end: 7,
       guess: '',
       attemptsRemaining: 10,
       userLogs: [],
@@ -137,6 +139,7 @@ class Game extends React.Component {
       result: '',
       hintsRemaining: 4,
       hintsGiven: [],
+      guessResult: {},
     });
     pin.setRandomPIN(4, 0, 7);
   }
@@ -195,7 +198,7 @@ class Game extends React.Component {
           <div>
             <Link className='btn' to='/'>Give Up</Link>
             <button className='btn' onClick={this.giveHint}>Call Mom (Hints Remaining: {this.state.hintsRemaining})</button>
-            <button className='btn' onClick={this.resetGame}>Reset Game</button>
+            {/* <button className='btn' onClick={this.resetGame}>Reset Game</button> */}
           </div>
         </div>
       </div>
