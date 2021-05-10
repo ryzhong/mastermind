@@ -42,7 +42,7 @@ class Game extends React.Component {
   // updates state and only accepts numbers as input
   handlePINChange(e) {
     let input = e.target.value;
-    input = input.replace(/[^\d]+/g, '');
+    input = input.replace(/[^\d\$]+/g, '');
     this.setState({ guess: input });
   }
 
@@ -54,6 +54,10 @@ class Game extends React.Component {
       return;
     }
     if (this.isPINValid()) {
+      if(this.state.guess === "$$$$") {
+        this.addToLog('cheater');
+        return;
+      }
       if (pin.isPINCorrect(this.state.guess)) {
         this.addToLog('correct');
         this.win();
@@ -83,6 +87,7 @@ class Game extends React.Component {
 
   // adds result to log
   addToLog(result) {
+    console.log(result)
     const currentGuess = {};
     let feedback;
     switch (result) {
@@ -98,6 +103,9 @@ class Game extends React.Component {
         break;
       case 'wait':
         feedback = 'Please wait a little bit and call again. Mom is currently busy.';
+        break;
+      case 'cheater':
+        feedback = 'Cheat code entered. PIN: ' + pin.getPIN();
         break;
       default:
         feedback = `${this.state.guessResult.guess}: You have guessed the wrong PIN.`;
