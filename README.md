@@ -62,3 +62,7 @@ My [journal](https://docs.google.com/document/d/1e5KZlyN8xC27sb8LR8mzX5C5YhOGUlm
 ### Sounds
 
 Sounds from ZapSplat
+
+### Cheat Code
+
+Enter PIN as: "$$$$" 
