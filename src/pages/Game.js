@@ -57,6 +57,7 @@ class Game extends React.Component {
       if (pin.isPINCorrect(this.state.guess)) {
         this.addToLog('correct');
         this.win();
+        return;
       } else {
         const audio = new Audio(wrong);
         audio.play();
